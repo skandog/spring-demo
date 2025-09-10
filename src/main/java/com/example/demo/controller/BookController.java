@@ -1,9 +1,13 @@
-package com.example.demo;
+package com.example.demo.controller;
 
 import org.springframework.web.bind.annotation.*;
+
+import com.example.demo.dto.BookDTO;
+import com.example.demo.model.Book;
+import com.example.demo.service.BookService;
+
 import java.util.List;
 import java.util.stream.Collectors;
-
 
 @RestController
 @RequestMapping("/books")
@@ -11,16 +15,16 @@ public class BookController {
 
     private final BookService service;
 
-     public BookController(BookService service) {
+    public BookController(BookService service) {
         this.service = service;
     }
 
     @GetMapping
     public List<BookDTO> all() {
         return service.getAllBooks()
-                      .stream()
-                      .map(book -> new BookDTO(book.getTitle()))
-                      .collect(Collectors.toList());
+                .stream()
+                .map(book -> new BookDTO(book.getTitle()))
+                .collect(Collectors.toList());
     }
 
     @PostMapping
